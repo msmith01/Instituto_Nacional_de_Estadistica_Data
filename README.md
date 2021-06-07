@@ -3,7 +3,7 @@ An R script to download all economic data from the INE.es website. For example, 
 
 https://www.ine.es/dynt3/inebase/index.htm?padre=5608
 
-To run, set your working directory to the folder you want the data to be installed. The run the script.
+To run, set your working directory to the folder you want the data to be installed. Then run the script.
 
 File structure:
 
