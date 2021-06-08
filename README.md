@@ -10,7 +10,7 @@ File structure:
 .
 ├── ...
 ├── INE
-│   ├── Distribución por fuente de ingresos
+│   ├── Indicadores de renta media y mediana
 |       ├── Albacete.json
 |       ├── Alicante_Alicante.json
 |       ├── Almeria.json
