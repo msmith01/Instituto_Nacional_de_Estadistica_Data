@@ -6,6 +6,7 @@ library(purrr)
 library(stringr)
 library(jsonlite)
 
+# Change your working directory here to the folder in which you want the data downloaded.
 setwd("/home/bscuser/Escritorio/mobility")
 
 get_expand_url <- function(url) {
@@ -55,9 +56,7 @@ expand_url <- get_expand_url(start_url)
 provincias_links <- get_provincias_links(expand_url)
 indices <- 1:length(provincias_links)
 
-df <- purrr::map2_dfr(provincias_links, indices, .f = get_details)
-
-df <- df %>% 
+df <- purrr::map2_dfr(provincias_links, indices, .f = get_details) %>% 
   mutate(
     provincesFolderLocationsNames = str_replace_all(provincia, "/", "_"),
     provincesFolderLocationsNames = str_replace_all(provincesFolderLocationsNames, ",", ""),
@@ -68,10 +67,7 @@ df <- df %>%
   ) %>% 
   mutate(across(where(is.factor), as.character))
 
-
-
 # create the folders for each province
-setwd("/home/bscuser/Escritorio/mobility/")
 dir.create(paste(getwd(), "/data/INE/", sep = ""))
 economicDataNames <- unique(df$titleFolderLocations)
 economicDataNames %>% 
@@ -123,16 +119,5 @@ POSSIBLYdownloadAndStoreJSONData <- possibly(downloadAndStoreJSONData, otherwise
 
 pmap(list(df2$json_link, df2$titleFolderLocations, df2$provincia, df2$rowID, df2$groupID, df2$provincesFolderLocationsNames), ~POSSIBLYdownloadAndStoreJSONData(..1, ..2, ..3, ..4, ..5, ..6))
 
-
-
-##########################
-
-# dat <- df2 %>% 
-#   filter(provincia == "Alicante/Alacant")
-
-lnk = df2 %>% 
-  filter(rowID == "11") %>% 
-  pull(json_link) %>% 
-  unlist()
-JSON_in = fromJSON(lnk)
+########################## END ########################## 
 
